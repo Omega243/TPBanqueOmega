@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author Dina
  */
 @Entity
-@Table(name = "customer")
+@Table(name = "banque")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c")})
@@ -31,6 +31,10 @@ public class CompteBancaire implements Serializable {
     private Long id;
     private String nom;
     private int solde;
+    
+    public CompteBancaire(){
+    
+    }
 
     public Long getId() {
         return id;
@@ -95,10 +99,6 @@ public class CompteBancaire implements Serializable {
     @Override
     public String toString() {
         return "mg.itu.tpbanqueomega.entity.CompteBancaire[ id=" + id + " ]";
-    }
-    
-    public CompteBancaire(){
-    
     }
     
     public CompteBancaire(String nom, int solde) {  
