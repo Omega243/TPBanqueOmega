@@ -21,12 +21,12 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class Init {
     private static final Logger LOGGER = Logger.getLogger(Init.class.getName());
-    
     @Inject
     private GestionnaireCompte gestionnaireCompte;
     
-    public Init(){
     
+    public Init() {
+        
     }
     
     @PostConstruct
