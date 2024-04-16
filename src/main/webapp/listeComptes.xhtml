@@ -62,6 +62,10 @@
                                             title="Supprimer le compte de #{comptes.nom}" style="align: center;">
                                 <h:graphicImage name="images/delete.jpg"/>
                             </h:commandLink>
+                            <h:link outcome="modifierComptes?id=#{comptes.id}"
+                                    title="Modifier le compte de #{comptes.nom}" >
+                                <h:graphicImage name="images/modif.jpg"/>
+                            </h:link>
                         </p:column>
                         
                         <f:facet name="paginatorTopLeft">
