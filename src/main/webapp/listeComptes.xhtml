@@ -35,7 +35,9 @@
                            <f:facet name="header">
                                <h:outputText value="Id"/>
                            </f:facet>
-                           <h:outputText value="#{comptes.id}"/>
+                           
+                           <h:link outcome="mouvement?id=#{comptes.id}" 
+                            value="#{comptes.id}"/>
                         </p:column>
 
                         <p:column sortBy="#{comptes.nom}" filterBy="#{comptes.nom}" filterMatchMode="contains" filterable="true">
