@@ -19,24 +19,24 @@
                         <h:inputText id="source" size="3" value="#{transfert.idSource}"
                                      required="true"
                                      converterMessage="L'id est un nombre entier"/>
-                        <h:message for="source"/>
+                        <h:message for="source" style="color: red"/>
                         
                         Id compte destination :
                         <h:inputText id="destination" size="3" value="#{transfert.idDestination}"
                                      required="true"
                                      converterMessage="L'id est un nombre entier"/>
-                        <h:message for="destination"/>
+                        <h:message for="destination" style="color: red"/>
                         
                         Somme à transférer :
                         <h:inputText id="montant" size="3" value="#{transfert.montant}"
                                      required="true"
                                      converterMessage="La somme est un nombre entier"/>
-                        <h:message for="montant"/>
+                        <h:message for="montant" style="color: red"/>
                  
                     </h:panelGrid>
                     <h:commandButton value="Valider" action="#{transfert.soumettre()}"/>
                 </h:form>
-                <h:messages/>
+                <h:messages style="color: red"/>
             </ui:define>
 
         </ui:composition>

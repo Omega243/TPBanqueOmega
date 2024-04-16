@@ -6,6 +6,8 @@ package mg.itu.tpbanqueomega.jsf;
 
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import mg.itu.tpbanqueomega.entity.CompteBancaire;
 import mg.itu.tpbanqueomega.service.GestionnaireCompte;
@@ -56,7 +58,49 @@ public class transfert {
     }
     
     public String soumettre() {
+        
+        Util util = new Util();
+        
+        boolean erreur = false;
+        
+        CompteBancaire source = gestionnaireCompte.findById(idSource);
+        CompteBancaire destination = gestionnaireCompte.findById(idDestination);
+        if (source == null) {
+            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Compte source introuvable", "Le compte source spécifié n'existe pas.");
+            FacesContext.getCurrentInstance().addMessage("source", errorMessage);
+            erreur = true;
+        }
+            
+        if (destination == null){
+            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Compte destination introuvable", "Le compte destination spécifié n'existe pas.");
+            FacesContext.getCurrentInstance().addMessage("destination", errorMessage);
+            erreur = true;
+        } 
+          
+        if (source != null && destination != null && source.getSolde() < montant) {
+            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solde insuffisant", "Le solde du compte source est insuffisant pour effectuer le transfert.");
+            FacesContext.getCurrentInstance().addMessage(null, errorMessage);
+            erreur = true;
+        }
+        
+        
+        if (erreur) { 
+          return null;
+        }
+        
         gestionnaireCompte.transferer(idSource, idDestination, montant);
+        
+        if(source != null && destination != null) {
+            String compteSource = source.getNom();
+            String compteDestination = destination.getNom();
+            
+            String messageDetail = "Transfert réussi de " + compteSource + " à " + compteDestination + " pour un montant de " + montant;
+            String messageResume = "Transfert réussi";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, messageDetail, messageResume);
+            util.addFlashMessage(message);
+        }
+        
+        /*util.addFlashMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Transfert correctement effectué", null));*/
         return "listeComptes?transfert="+ idSource + idDestination + montant + "&amp;faces-redirect=true";
     }
     
