@@ -19,20 +19,94 @@ import jakarta.faces.context.Flash;
  */
 public class Util {
     
-    public static void errorMessage(String messageDetail, String messageResume,
-                FacesMessage.Severity severite, String id) {
-        FacesMessage errorMessage =
-                new FacesMessage(severite, messageResume, messageDetail);
-        FacesContext.getCurrentInstance().addMessage(id, errorMessage);
-    }
+    public static void message(String messageDetail, String messageResume,
+          FacesMessage.Severity severite, String clientId) {
+    FacesMessage msg =
+            new FacesMessage(severite, messageResume, messageDetail);
+    FacesContext.getCurrentInstance().addMessage(clientId, msg);
+  }
 
-    public void addFlashMessage(FacesMessage message) {
-        FacesContext facesContext =
-        FacesContext.getCurrentInstance();
-        Flash flash =
-        facesContext.getExternalContext().getFlash();
-        flash.setKeepMessages(true);
-        facesContext.addMessage(null, message);
-    }
+  /**
+   * Message qui n'est pas attaché à un composant particulier.
+   * @param messageDetail
+   * @param messageResume
+   * @param severite 
+   */
+  public static void message(String messageDetail, String messageResume,
+          FacesMessage.Severity severite) {
+    FacesMessage msg =
+            new FacesMessage(severite, messageResume, messageDetail);
+    FacesContext.getCurrentInstance().addMessage(null, msg);
+  }
+
+  /**
+   * Message de sévérité FacesMessage.SEVERITY_ERROR qui n'est pas attaché
+   * à un composant particulier. On peut donner un message différente pour
+   * le message détaillé et pour le message résumé.
+   * @param messageDetail
+   * @param messageResume 
+   */
+  public static void messageErreur(String messageDetail, String messageResume) {
+    message(messageDetail, messageResume, FacesMessage.SEVERITY_ERROR);
+  }
+
+  public static void messageErreur(String message) {
+    message(message, message, FacesMessage.SEVERITY_ERROR);
+  }
+  
+  /**
+   * Message d'erreur attaché à un composant particulier.
+   * @param messageDetail
+   * @param messageResume
+   * @param clientId 
+   */
+  public static void messageErreur(String messageDetail, String messageResume, String clientId) {
+    message(messageDetail, messageResume, FacesMessage.SEVERITY_ERROR, clientId);
+  }
+
+  /**
+   * Message d'information (ou de succès) qui n'est pas attaché à un composant
+   * particulier.
+   * @param messageDetail
+   * @param messageResume 
+   */
+  public static void messageInfo(String messageDetail, String messageResume) {
+    message(messageDetail, messageResume, FacesMessage.SEVERITY_INFO);
+  }
+
+  public static void messageInfo(String message) {
+    message(message, message, FacesMessage.SEVERITY_INFO);
+  }
+
+  /**
+   * Messages avec redirection, pas attaché à un composant particulier.
+   * @param message à afficher
+   */
+  public static void addFlashMessage(FacesMessage message) {
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    Flash flash = facesContext.getExternalContext().getFlash();
+    flash.setKeepMessages(true);
+    facesContext.addMessage(null, message);
+  }
+  
+  /**
+   * Message d'erreur avec redirection, pas attaché à un composant particulier.
+   * @param message 
+   */
+  public static void addFlashErrorMessage(String message) {
+    FacesMessage msg = 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message);
+    addFlashMessage(msg);
+  }
+  
+  /**
+   * Message d'information avec redirection, pas attaché à un composant particulier.
+   * @param message 
+   */
+  public static void addFlashInfoMessage(String message) {
+    FacesMessage msg = 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, message, message);
+    addFlashMessage(msg);
+  }
     
 }
