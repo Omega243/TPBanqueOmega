@@ -17,27 +17,48 @@
             <ui:define name="content">
                 <h:form>
                     <p:dataTable value="#{listeComptes.allComptes}"
-                            var="comptes">
-                        <p:column>
+                            var="comptes" rows="10"
+                            paginator="true" paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="2,4,8,10" widgetVar="compteTable" emptyMessage="Aucun compte trouvé avec les critères donnés">
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                               <h:outputText value="Recherche dans tous les champs de recherche"/>
+                               <p:inputText id="globalFilter" onkeyup="PF('compteTable').filter()"
+                                            style="width:150px"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <p:column sortBy="#{comptes.id}" filterBy="#{comptes.id}" filterMatchMode="contains" filterable="true">
                            <f:facet name="header">
                                <h:outputText value="Id"/>
                            </f:facet>
                            <h:outputText value="#{comptes.id}"/>
                         </p:column>
 
-                        <p:column>
+                        <p:column sortBy="#{comptes.nom}" filterBy="#{comptes.nom}" filterMatchMode="contains" filterable="true">
                            <f:facet name="header">
                                <h:outputText value="Nom"/>
                            </f:facet>
                            <h:outputText value="#{comptes.nom}"/>
                         </p:column>
 
-                         <p:column>
+                         <p:column sortBy="#{comptes.solde}" filterBy="#{comptes.solde}" filterMatchMode="contains" filterable="true">
                            <f:facet name="header">
                                <h:outputText value="Solde"/>
                            </f:facet>
                            <h:outputText value="#{comptes.solde}"/>
                         </p:column>
+                        
+                        <f:facet name="paginatorTopLeft">
+                            <p:commandButton type="button" icon="pi pi-refresh"/>
+                        </f:facet>
+
+                        <f:facet name="paginatorBottomRight">
+                            <p:commandButton type="button" icon="pi pi-cloud-upload"/>
+                        </f:facet>
                     </p:dataTable>
                 </h:form>
                 <h:messages/>
