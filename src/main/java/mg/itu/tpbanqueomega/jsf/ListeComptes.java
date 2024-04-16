@@ -37,5 +37,11 @@ public class ListeComptes implements Serializable {
         }
         return allComptes;
     }
+
+    public String supprimerCompte(CompteBancaire compteBancaire) {
+        gestionnaireCompte.supprimerCompte(compteBancaire);
+        Util.addFlashInfoMessage("Compte de " + compteBancaire.getNom() + " supprimé");
+        return "listeComptes?faces-redirect=true";
+      }
     
 }

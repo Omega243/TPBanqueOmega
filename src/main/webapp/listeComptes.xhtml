@@ -53,6 +53,16 @@
                            </f:facet>
                            <h:outputText value="#{comptes.solde}"/>
                         </p:column>
+
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText value="Opérations"/>
+                            </f:facet>
+                            <h:commandLink action="#{listeComptes.supprimerCompte(comptes)}"
+                                            title="Supprimer le compte de #{comptes.nom}" style="align: center;">
+                                <h:graphicImage name="images/delete.jpg"/>
+                            </h:commandLink>
+                        </p:column>
                         
                         <f:facet name="paginatorTopLeft">
                             <p:commandButton type="button" icon="pi pi-refresh"/>
