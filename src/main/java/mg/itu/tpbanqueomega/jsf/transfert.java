@@ -66,20 +66,17 @@ public class transfert {
         CompteBancaire source = gestionnaireCompte.findById(idSource);
         CompteBancaire destination = gestionnaireCompte.findById(idDestination);
         if (source == null) {
-            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Compte source introuvable", "Le compte source spécifié n'existe pas.");
-            FacesContext.getCurrentInstance().addMessage("source", errorMessage);
+            Util.messageErreur("Compte source introuvable", "Le compte source spécifié n'existe pas.", "form:source");
             erreur = true;
         }
             
         if (destination == null){
-            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Compte destination introuvable", "Le compte destination spécifié n'existe pas.");
-            FacesContext.getCurrentInstance().addMessage("destination", errorMessage);
+            Util.messageErreur("Compte destination introuvable", "Le compte destination spécifié n'existe pas.", "form:destination");
             erreur = true;
         } 
           
-        if (source != null && destination != null && source.getSolde() < montant) {
-            FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solde insuffisant", "Le solde du compte source est insuffisant pour effectuer le transfert.");
-            FacesContext.getCurrentInstance().addMessage(null, errorMessage);
+        if (source.getSolde() < montant) {
+            Util.messageErreur("Solde insuffisant", "Le solde du compte source est insuffisant pour effectuer le transfert.", "form:montant");
             erreur = true;
         }
         
