@@ -93,7 +93,8 @@ public class Transferts {
             Util.addFlashMessage(message);
         }
        
-        return "listeComptes?faces-redirect=true";
+        return "listeComptes?faces-redirect=true&idSource=" + idSource + "&idDestination=" + idDestination + "&montant=" + montant;
+
     }
     
 }
