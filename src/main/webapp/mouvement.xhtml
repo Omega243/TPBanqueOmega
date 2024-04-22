@@ -4,93 +4,49 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html">
-
     <body>
-
         <ui:composition template="./WEB-INF/templates/template_defaut.xhtml">
-
         <ui:define name="metadata"> 
-
         <f:metadata>   
-
-            <f:viewParam name="id" value="#{mouvement.id}"   
-
+            <f:viewParam name="id" value="#{mouvements.id}"   
                          required="true"/>   
-
-            <f:viewAction action="#{mouvement.loadCompte}"/>   
-
+            <f:viewAction action="#{mouvements.loadCompte}"/>   
         </f:metadata> 
-
     </ui:define> 
-
-
 
     <ui:define name="top"> 
-
         Mouvement sur un compte 
-
     </ui:define> 
 
-
-
     <ui:define name="content"> 
-
-        <h1>Mouvement sur le compte numéro #{mouvement.id} 
-
-            de #{mouvement.compte.nom}</h1> 
-
-
+        <h1>Mouvement sur le compte numéro #{mouvements.id} 
+            de #{mouvements.compte.nom}</h1> 
 
         <h:form> 
-
             <h:panelGrid columns="3"> 
-
                 Nom du titulaire : 
-
-                <h:outputText value="#{mouvement.compte.nom}"/> 
-
+                <h:outputText value="#{mouvements.compte.nom}"/> 
                 <h:panelGroup/> 
-
                 Type du mouvement : 
-
                 <h:selectOneRadio id="typeMouvement" 
-
-                                  value="#{mouvement.typeMouvement}" 
-
+                                  value="#{mouvements.typeMouvement}" 
                                   required="true" 
-
                                   layout="pageDirection"> 
-
                     <f:selectItem itemValue="ajout" itemLabel="Ajout"/> 
-
                     <f:selectItem itemValue="retrait" itemLabel="Retrait"/> 
-
                 </h:selectOneRadio> 
 
                 <h:message for="typeMouvement"/> 
-
-
-
                 Montant du mouvement : 
-
-                <h:inputText id="montant" value="#{mouvement.montant}" 
-
+                <h:inputText id="montant" value="#{mouvements.montant}" 
                              required="true" 
-
-                             validator="#{mouvement.validateSolde}"/> 
-
+                             validator="#{mouvements.validateSolde}"/> 
                 <h:message for="montant"/> 
-
             </h:panelGrid> 
-
-            <h:commandButton action="#{mouvement.enregistrerMouvement()}" 
-
+            <h:commandButton action="#{mouvements.enregistrerMouvement()}" 
                              value="Enregistrer le mouvement"/> 
-
         </h:form> 
-
     </ui:define> 
-
         </ui:composition>
 
     </body>

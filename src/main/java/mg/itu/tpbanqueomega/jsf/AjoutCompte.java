@@ -60,7 +60,7 @@ public class AjoutCompte {
 
         if (!erreur) {
             gestionnaireCompte.creerCompte(new CompteBancaire(nom, solde));
-            Util.addFlashInfoMessage("Compte de " + nom + " a été créé avec succès");
+            Util.addFlashInfoMessage("Compte de " + nom + " a été créé avec succès avec un montant de " + solde);
             return "listeComptes?faces-redirect=true";
         } else {
             return null;

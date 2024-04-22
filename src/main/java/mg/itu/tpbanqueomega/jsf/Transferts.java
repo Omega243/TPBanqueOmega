@@ -7,7 +7,6 @@ package mg.itu.tpbanqueomega.jsf;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import mg.itu.tpbanqueomega.entity.CompteBancaire;
 import mg.itu.tpbanqueomega.service.GestionnaireCompte;
@@ -16,9 +15,9 @@ import mg.itu.tpbanqueomega.service.GestionnaireCompte;
  *
  * @author Dina
  */
-@Named(value = "transfert")
+@Named(value = "transferts")
 @RequestScoped
-public class transfert {
+public class Transferts {
     
     @Inject
     private GestionnaireCompte gestionnaireCompte;
@@ -54,12 +53,10 @@ public class transfert {
     /**
      * Creates a new instance of transfert
      */
-    public transfert() {
+    public Transferts() {
     }
     
     public String soumettre() {
-        
-        Util util = new Util();
         
         boolean erreur = false;
         
@@ -75,11 +72,10 @@ public class transfert {
             erreur = true;
         } 
           
-        if (source.getSolde() < montant) {
+        if (source != null && source.getSolde() < montant) {
             Util.messageErreur("Solde insuffisant", "Le solde du compte source est insuffisant pour effectuer le transfert.", "form:montant");
             erreur = true;
         }
-        
         
         if (erreur) { 
           return null;
@@ -94,11 +90,10 @@ public class transfert {
             String messageDetail = "Transfert réussi de " + compteSource + " à " + compteDestination + " pour un montant de " + montant;
             String messageResume = "Transfert réussi";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, messageDetail, messageResume);
-            util.addFlashMessage(message);
+            Util.addFlashMessage(message);
         }
-        
-        /*util.addFlashMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Transfert correctement effectué", null));*/
-        return "listeComptes?transfert="+ idSource + idDestination + montant + "&amp;faces-redirect=true";
+       
+        return "listeComptes?faces-redirect=true";
     }
     
 }

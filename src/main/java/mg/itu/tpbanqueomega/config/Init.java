@@ -12,7 +12,6 @@ import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
 import mg.itu.tpbanqueomega.entity.CompteBancaire;
 import mg.itu.tpbanqueomega.service.GestionnaireCompte;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,10 +19,8 @@ import java.util.logging.Logger;
  */
 @ApplicationScoped
 public class Init {
-    private static final Logger LOGGER = Logger.getLogger(Init.class.getName());
     @Inject
     private GestionnaireCompte gestionnaireCompte;
-    
     
     public Init() {
         
@@ -34,17 +31,18 @@ public class Init {
         @Observes
         @Initialized(ApplicationScoped.class)
         ServletContext context) {
-        LOGGER.info("Initialisation de la création des comptes...");
-        gestionnaireCompte.creerCompte(new CompteBancaire("John Lennon", 150000));
-        LOGGER.info("Compte de John Lennon créé avec succès.");
-        gestionnaireCompte.creerCompte(new CompteBancaire("Paul McCartney", 950000));
-        LOGGER.info("Compte de Paul McCartney créé avec succès.");
-        gestionnaireCompte.creerCompte(new CompteBancaire("Ringo Starr", 20000));
-        LOGGER.info("Compte de Ringo Starr créé avec succès.");
-        gestionnaireCompte.creerCompte(new CompteBancaire("Georges Harrisson", 100000));
-        LOGGER.info("Compte de George Harrison créé avec succès.");
         
-        LOGGER.info("Initialisation de la création des comptes terminée.");
+        if (gestionnaireCompte.getAllComptes().isEmpty()) {
+            CompteBancaire[] comptes = new CompteBancaire[4];
+            comptes[0] = new CompteBancaire("John Lennon", 150000);
+            comptes[1] = new CompteBancaire("Paul McCartney", 950000);
+            comptes[2] = new CompteBancaire("Ringo Starr", 20000);
+            comptes[3] = new CompteBancaire("Georges Harrisson", 100000);
+            
+            for (CompteBancaire c : comptes) {
+                gestionnaireCompte.creerCompte(c);
+            }
+        }
     
     }
     
