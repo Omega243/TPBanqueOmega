@@ -115,16 +115,21 @@ public class CompteBancaire implements Serializable {
     
     public CompteBancaire(String nom, int solde) {  
         this.nom = nom;  
-        this.solde = solde;  
+        this.solde = solde;
+        operations.add(new OperationBancaire("Création du compte", solde));
     } 
     
     public void deposer(int montant) {  
-        solde += montant;  
+        solde += montant;
+        operations.add(new OperationBancaire("Crédit", montant));
+        operations.add(new OperationBancaire("Solde", solde));
     }  
                   
     public void retirer(int montant) {  
       if (montant < solde) {  
-        solde -= montant;  
+        solde -= montant;
+        operations.add(new OperationBancaire("Débit", -montant));
+        operations.add(new OperationBancaire("Solde", solde));
       } else {
         solde = 0;
       }  
