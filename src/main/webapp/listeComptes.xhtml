@@ -68,6 +68,18 @@
                             </h:link>
                         </p:column>
                         
+                        <p:column width="100">
+                            <f:facet name="header">
+                                <h:outputText escape="false" value="Historique&lt;br/>opérations"/>
+                            </f:facet>
+                            
+                            <h:link outcome="operations?id=#{comptes.id}"
+                                    title="Voir les détails du compte de #{comptes.nom}" >
+                                <f:param name="id" value="#{comptes.id}" />
+                                <h:graphicImage name="images/detail.jpg"/>
+                            </h:link>
+                        </p:column>
+                        
                         <f:facet name="paginatorTopLeft">
                             <p:commandButton type="button" icon="pi pi-refresh"/>
                         </f:facet>
