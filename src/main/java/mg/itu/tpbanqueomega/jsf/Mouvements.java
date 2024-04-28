@@ -15,6 +15,7 @@ import mg.itu.tpbanqueomega.service.GestionnaireCompte;
 import jakarta.faces.component.UIInput;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.validator.ValidatorException;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 
@@ -114,17 +115,22 @@ public class Mouvements implements Serializable {
     } 
     /** 
 
-     * Enregistre le Mouvements, ajout ou retirer 
-
+     * Enregistre le Mouvements, ajout ou retirer
+     * @return
      */ 
 
-    public String enregistrerMouvement() { 
-        if (typeMouvement.equals("ajout")) { 
-            gestionnaireCompte.deposer(compte, montant); 
-        } else { 
-            gestionnaireCompte.retirer(compte, montant); 
-        } 
-        Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom()); 
-        return "listeComptes?faces-redirect=true"; 
+    public String enregistrerMouvement() {
+        try {
+            if (typeMouvement.equals("ajout")) { 
+                gestionnaireCompte.deposer(compte, montant); 
+            } else { 
+                gestionnaireCompte.retirer(compte, montant); 
+            } 
+            Util.addFlashInfoMessage(typeMouvement + " de " + montant + " enregistré sur compte de " + compte.getNom()); 
+            return "listeComptes?faces-redirect=true"; 
+        } catch (OptimisticLockException ex) {
+            Util.messageErreur("Le compte de " + compte.getNom() + " a été modifié ou supprimé par un autre utilisateur !");
+            return null;
+        }
     } 
 }
