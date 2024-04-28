@@ -27,7 +27,7 @@ import java.util.List;
 @Table(name = "banque")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c")})
+    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c JOIN FETCH c.operations")})
 public class CompteBancaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
